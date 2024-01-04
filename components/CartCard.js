@@ -1,18 +1,27 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 
-const CartCard = ({ item }) => {
+const CartCard = ({ item, onRemoveItem }) => {
   // Assuming item has properties like name, price, and image
   const { name, price, image } = item;
 
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={() => {/* Handle card press */}}>
+    <View style={styles.cardContainer}>
       <Image source={{ uri: image }} style={styles.productImage} />
       <View style={styles.productInfo}>
         <Text style={styles.productName}>{name}</Text>
-        <Text style={styles.productPrice}>{'\u20B9'}{price}</Text>
+        <Text style={styles.productPrice}>
+          {"\u20B9"}
+          {price}
+        </Text>
       </View>
-    </TouchableOpacity>
+      <View>
+        <Pressable onPress={() => onRemoveItem(item)}>
+          <AntDesign name="delete" size={24} color="black" />
+        </Pressable>
+      </View>
+    </View>
   );
 };
 

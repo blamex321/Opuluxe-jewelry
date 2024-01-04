@@ -10,14 +10,22 @@ function Cart({ navigation }) {
       headerRight: () => <CartIcon />,
     });
   }, [navigation]);
-  const { cartItems } = useContext(CartContext);
-  console.log(cartItems);
+
+  const { cartItems, removeFromCart } = useContext(CartContext);
+
+  const handleRemoveItem = (item) => {
+    removeFromCart(item);
+  };
+
   return (
     <FlatList
       data={cartItems}
       keyExtractor={(item) => item.id}
-      renderItem={CartCard}
+      renderItem={({ item }) => (
+        <CartCard item={item} onRemoveItem={handleRemoveItem} />
+      )}
     />
   );
 }
+
 export default Cart;
