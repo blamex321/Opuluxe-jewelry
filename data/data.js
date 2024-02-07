@@ -16,7 +16,7 @@ export let PRODUCTS = [];
 
 export const fetchProducts = async () => {
   try {
-    const response = await axios.get("https://jewllery-app-b3668-default-rtdb.asia-southeast1.firebasedatabase.app/products.json");
+    const response = await axios.get("https://sgk-jewellers-default-rtdb.asia-southeast1.firebasedatabase.app/products.json");
 
     if (response.data) {
       // Transform API response into Product instances
