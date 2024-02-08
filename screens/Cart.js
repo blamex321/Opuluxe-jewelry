@@ -1,8 +1,9 @@
 import { View, Text, FlatList, Button, StyleSheet } from "react-native";
-import React, { useContext, useLayoutEffect } from "react";
+import React, { useContext, useLayoutEffect,useState } from "react";
 import CartContext from "../contexts/CartContext";
 import CartIcon from "../components/CartIcon";
 import CartCard from "../components/CartCard";
+import LoginContext from "../contexts/loginContext";
 
 function Cart({ navigation }) {
   useLayoutEffect(() => {
@@ -12,13 +13,20 @@ function Cart({ navigation }) {
   }, [navigation]);
 
   const { cartItems, removeFromCart } = useContext(CartContext);
+  const { logedIn } = useContext(LoginContext);
+
 
   const handleRemoveItem = (item) => {
     removeFromCart(item);
   };
 
   const goToLoginPage = () => {
-    navigation.navigate("login");
+    console.log(logedIn )
+    if (logedIn === true) {
+      navigation.navigate("checkout");
+    } else {
+      navigation.navigate("login");
+    }
   }
   
 

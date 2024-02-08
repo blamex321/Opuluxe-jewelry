@@ -8,6 +8,8 @@ import ProductDetails from "./screens/ProductDetails";
 import Cart from "./screens/Cart";
 import { CartProvider } from "./contexts/CartContext";
 import LoginScreen from "./screens/LoginScreen";
+import { LoginProvider } from "./contexts/loginContext";
+import CheckoutDetails from "./screens/CheckoutAndPayment";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,17 +18,23 @@ export default function App() {
     <>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <CartProvider>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen name="Categories" component={Categories} />
-              <Stack.Screen name="Products" component={Products} />
-              <Stack.Screen name="Product Details" component={ProductDetails} />
-              <Stack.Screen name="Cart" component={Cart} />
-              <Stack.Screen name="login" component={LoginScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </CartProvider>
+        <LoginProvider>
+          <CartProvider>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen name="Categories" component={Categories} />
+                <Stack.Screen name="Products" component={Products} />
+                <Stack.Screen
+                  name="Product Details"
+                  component={ProductDetails}
+                />
+                <Stack.Screen name="Cart" component={Cart} />
+                <Stack.Screen name="login" component={LoginScreen} />
+                <Stack.Screen name="checkout" component={CheckoutDetails} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </CartProvider>
+        </LoginProvider>
       </View>
       {/* <View style={styles.footer}>
         <Footer />

@@ -6,12 +6,16 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useContext } from "react";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { firebaseConfig } from "../util/config";
 import firebase from "firebase/compat/app";
+import { useNavigation } from "@react-navigation/native";
+import LoginContext from "../contexts/loginContext";
+
 
 export default function LoginScreen() {
+  const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [verificationId, setVerificationId] = useState("");
@@ -26,6 +30,7 @@ export default function LoginScreen() {
   const [confirmResult, setConfirmResult] = useState(undefined);
   const [phoneError, setPhoneError] = useState(undefined);
   const [codeError, setCodeError] = useState(undefined);
+  const { login,logedIn } = useContext(LoginContext);
 
   const handleSendCode = () => {
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -54,6 +59,8 @@ export default function LoginScreen() {
       .then((result) => {
         setConfirmInProgress(false);
         setConfirmResult(result);
+        navigation.navigate("checkout");
+        login();
       })
       .catch((error) => {
         setConfirmInProgress(false);
