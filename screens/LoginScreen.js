@@ -87,7 +87,7 @@ export default function LoginScreen() {
           keyboardType="phone-pad"
           textContentType="telephoneNumber"
           onChangeText={(phoneNumber) => {
-            setPhoneNumber(phoneNumber);
+            setPhoneNumber("91" +   phoneNumber);
             setPhoneError(undefined);
           }}
         />
