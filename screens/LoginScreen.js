@@ -1,18 +1,11 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  Alert,
-} from "react-native";
-import React, { useState, useRef,useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { firebaseConfig } from "../util/config";
 import firebase from "firebase/compat/app";
 import { useNavigation } from "@react-navigation/native";
 import LoginContext from "../contexts/loginContext";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -30,7 +23,7 @@ export default function LoginScreen() {
   const [confirmResult, setConfirmResult] = useState(undefined);
   const [phoneError, setPhoneError] = useState(undefined);
   const [codeError, setCodeError] = useState(undefined);
-  const { login,logedIn } = useContext(LoginContext);
+  const { login } = useContext(LoginContext);
 
   const handleSendCode = () => {
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -68,12 +61,12 @@ export default function LoginScreen() {
       });
   };
 
-  const handleSignOut = () => {
-    firebaseConfig.auth().signOut();
-  };
-
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+      style={{ flex: 1, width: "100%" }}
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
+      keyboardShouldPersistTaps="handled"
+    >
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
@@ -87,14 +80,11 @@ export default function LoginScreen() {
           keyboardType="phone-pad"
           textContentType="telephoneNumber"
           onChangeText={(phoneNumber) => {
-            setPhoneNumber("91" +   phoneNumber);
+            setPhoneNumber("91" + phoneNumber);
             setPhoneError(undefined);
           }}
         />
-        <TouchableOpacity
-          style={styles.sendCodeButton}
-          onPress={handleSendCode}
-        >
+        <TouchableOpacity style={styles.sendCodeButton} onPress={handleSendCode}>
           <Text style={styles.sendCodeText}>Send Code</Text>
         </TouchableOpacity>
       </View>
@@ -112,10 +102,7 @@ export default function LoginScreen() {
               setCodeError(undefined);
             }}
           />
-          <TouchableOpacity
-            style={styles.confirmCodeButton}
-            onPress={handleConfirmCode}
-          >
+          <TouchableOpacity style={styles.confirmCodeButton} onPress={handleConfirmCode}>
             <Text style={styles.confirmCodeText}>Confirm Code</Text>
           </TouchableOpacity>
         </View>
@@ -128,16 +115,11 @@ export default function LoginScreen() {
           {message.text}
         </Text>
       ) : null}
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
