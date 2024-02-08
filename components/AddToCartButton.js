@@ -4,7 +4,7 @@ import CartContext from "../contexts/CartContext";
 import { useNavigation } from "@react-navigation/native";
 
 function CartButton({ item }) {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const { addToCart } = useContext(CartContext);
   const handlePress = () => {
     addToCart(item);

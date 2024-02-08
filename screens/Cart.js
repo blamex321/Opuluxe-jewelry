@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Button, StyleSheet } from "react-native";
 import React, { useContext, useLayoutEffect } from "react";
 import CartContext from "../contexts/CartContext";
 import CartIcon from "../components/CartIcon";
@@ -17,15 +17,34 @@ function Cart({ navigation }) {
     removeFromCart(item);
   };
 
+  const goToLoginPage = () => {
+    navigation.navigate("login");
+  }
+  
+
   return (
-    <FlatList
-      data={cartItems}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <CartCard item={item} onRemoveItem={handleRemoveItem} />
-      )}
-    />
+    <>
+      <FlatList
+        data={cartItems}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <CartCard item={item} onRemoveItem={handleRemoveItem} />
+        )}
+      />
+      <Text onPress={goToLoginPage} style={styles.loginButton}>
+        checkout and login
+      </Text>
+    </>
   );
 }
 
 export default Cart;
+
+const styles = StyleSheet.create({
+  loginButton: {
+    backgroundColor: "blue",
+    color: "white",
+    padding: 20,
+    textAlign: "center",
+  },
+})

@@ -11,7 +11,6 @@ export default function ProductDetails() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <CartIcon />,
-
     });
   }
   , [navigation]);
