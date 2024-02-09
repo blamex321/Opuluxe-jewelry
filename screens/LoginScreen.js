@@ -23,7 +23,7 @@ export default function LoginScreen() {
   const [confirmResult, setConfirmResult] = useState(undefined);
   const [phoneError, setPhoneError] = useState(undefined);
   const [codeError, setCodeError] = useState(undefined);
-  const { login } = useContext(LoginContext);
+  const { login,user } = useContext(LoginContext);
 
   const handleSendCode = () => {
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -53,7 +53,12 @@ export default function LoginScreen() {
         setConfirmInProgress(false);
         setConfirmResult(result);
         navigation.navigate("checkout");
-        login();
+        const user = {
+          phoneNumber: result.user.phoneNumber,
+          // displayName: result.user.displayName,
+          // email: result.user.email,
+        };
+        login(user);
       })
       .catch((error) => {
         setConfirmInProgress(false);
@@ -80,7 +85,7 @@ export default function LoginScreen() {
           keyboardType="phone-pad"
           textContentType="telephoneNumber"
           onChangeText={(phoneNumber) => {
-            setPhoneNumber("91" + phoneNumber);
+            setPhoneNumber(phoneNumber);
             setPhoneError(undefined);
           }}
         />

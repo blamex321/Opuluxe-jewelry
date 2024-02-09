@@ -21,7 +21,6 @@ function Cart({ navigation }) {
   };
 
   const goToLoginPage = () => {
-    console.log(logedIn )
     if (logedIn === true) {
       navigation.navigate("checkout");
     } else {
